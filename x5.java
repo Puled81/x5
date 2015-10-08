@@ -1,11 +1,6 @@
-//// X5:  collisions.
-//// (Assume ball diameter of 30.)
-
-//// GLOBALS:  pool table, 3 colored balls
-
 String title=  "ELASTIC COLLISIONS";
 String news=   "Use 'r' key to reset.";
-String author=  "Your Name";
+String author=  "Drake";
 
 
 float left, right, top, bottom;
@@ -39,8 +34,7 @@ void setup() {
    yelDX=  random( 1,3 );   redDY=  random( 1,3 );
    bluDX=  random( 1,3 );   bluDY=  random( 1,3 );
  }
-
-//// NEXT FRAME:  table, bounce off walls, collisions, show all
+ //// NEXT FRAME:  table, bounce off walls, collisions, show all
 void draw() {
   background( 250,250,200 );
   rectMode( CORNERS );
@@ -48,15 +42,14 @@ void draw() {
   bounce();
   collisions();
   show();
-  messages();
+ 
 }
-
 //// SCENE:  draw the table with walls
 void table( float left, float top, float right, float bottom ) {
   fill( 100, 250, 100 );    // green pool table
   strokeWeight(20);
   stroke( 127, 0, 0 );      // Brown walls
-  rect( left-20, top-20, right+20, bottom+20 );
+  rect( left-25, top-25, right+25, bottom+25 );
   stroke(0);
   strokeWeight(1);
 }
@@ -64,6 +57,11 @@ void table( float left, float top, float right, float bottom ) {
 //// ACTION:  bounce off walls, collisions
 void bounce() {
   redX += redDX;  if ( redX<left || redX>right ) redDX *= -1;
+  redY += redDY;  if ( redY<top || redY>bottom ) redDY *=  -1;
+  yelX += yelDX;  if ( yelX<left || yelX>right ) yelDX *= -1;
+  yelY += yelDY;  if ( yelY<top || yelY>bottom ) yelDY *=  -1;
+  bluX += bluDX;  if ( bluX<left || bluX>right ) bluDX *= -1;
+  bluY += bluDY;  if ( bluY<top || bluY>bottom ) bluDY *=  -1;
 }
 void collisions() {
   float tmp;
@@ -72,6 +70,15 @@ void collisions() {
     tmp=yelDX;  yelDX=redDX;  redDX=tmp;
     tmp=yelDY;  yelDY=redDY;  redDY=tmp;
   }
+  if ( dist( redX,redY, bluX,bluY) < 30 ) {
+    tmp=bluDX;  bluDX=redDX;  redDX=tmp;
+    tmp=bluDY;  bluDY=redDY;  redDY=tmp;
+  }
+  if ( dist( bluX,bluY, yelX, yelY) < 30 ) {
+    tmp=yelDX;  yelDX=bluDX;  bluDX=tmp;
+    tmp=yelDY;  yelDY=bluDY;  bluDY=tmp;
+  }
+  
 }
 
 //// SHOW:  balls, messages
@@ -83,6 +90,7 @@ void show() {
   fill( 255,255,255 );    ellipse( cueX,cueY, 30,30 );
 }
 void messages() {
+  fill(0);
   text( title, width/3, 20 );
   text( news, width/3, 40 );
   text( author, 10, height-10 );
