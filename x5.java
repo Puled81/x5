@@ -30,6 +30,7 @@ void setup() {
    yelX=  random( middle,right );   yelY=  random( top, bottom );
    bluX=  random( middle,right );   bluY=  random( top, bottom );
    // Random speeds
+   cueDX= (0);  cueDY= (0);
    redDX=  random( 1,3 );   redDY=  random( 1,3 );
    yelDX=  random( 1,3 );   redDY=  random( 1,3 );
    bluDX=  random( 1,3 );   bluDY=  random( 1,3 );
@@ -62,6 +63,8 @@ void bounce() {
   yelY += yelDY;  if ( yelY<top || yelY>bottom ) yelDY *=  -1;
   bluX += bluDX;  if ( bluX<left || bluX>right ) bluDX *= -1;
   bluY += bluDY;  if ( bluY<top || bluY>bottom ) bluDY *=  -1;
+  cueX += cueDX;  if ( cueX<left || cueX>right ) cueDX *= -1;
+  cueY += cueDY;  if ( cueY<top || cueY>bottom ) cueDY *=  -1;
 }
 void collisions() {
   float tmp;
@@ -78,7 +81,19 @@ void collisions() {
     tmp=yelDX;  yelDX=bluDX;  bluDX=tmp;
     tmp=yelDY;  yelDY=bluDY;  bluDY=tmp;
   }
+  if ( dist( bluX,bluY, cueX, cueY) < 30 ) {
+    tmp=cueDX;  cueDX=bluDX;  bluDX=tmp;
+    tmp=cueDY;  cueDY=bluDY;  bluDY=tmp;
+  }
+  if ( dist( cueX, cueY, redX,redY) < 30 ) {
+    tmp=redDX;  redDX=cueDX;  cueDX=tmp;
+    tmp=redDY;  redDY=cueDY;  cueDY=tmp;
   
+}
+ if( dist( cueX, cueY, yelX,yelY) < 30 ) {
+    tmp=yelDX;  yelDX=cueDX;  cueDX=tmp;
+    tmp=yelDY;  yelDY=cueDY;  cueDY=tmp;
+} 
 }
 
 //// SHOW:  balls, messages
