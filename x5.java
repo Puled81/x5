@@ -47,9 +47,9 @@ void draw() {
 }
 //// SCENE:  draw the table with walls
 void table( float left, float top, float right, float bottom ) {
-  fill( 100, 250, 100 );    // green pool table
+  fill( 50, 205, 50 );    // green pool table
   strokeWeight(20);
-  stroke( 127, 0, 0 );      // Brown walls
+  stroke( 139, 69, 19 );      // Brown walls
   rect( left-25, top-25, right+25, bottom+25 );
   stroke(0);
   strokeWeight(1);
